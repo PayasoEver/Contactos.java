@@ -19,7 +19,7 @@ public class Contacto{
             return phoneNumber;
         }
 
-        public static Contacto  createContact(String name, String phoneNumber){
+        public static Contacto createContact(String name, String phoneNumber){
             Contacto con= new Contacto(name, phoneNumber);
              return con;
         }
@@ -72,17 +72,17 @@ public class Contacto{
             }
         }
 
-        private int findContact(String name) {
+        private int findContact(String myNumber) {
             for(int j=0;j<myContacts.size();j++) {
-                if(myContacts.get(j).getName().equals(name))
+                if(myContacts.get(j).getName().equals(myNumber))
                 return j;
             }
             return -1;
         }
 
-        public Contacto queryContacts(String name) {
-            if (findContact(name)!=-1) {
-                return myContacts.get(findContact(name));
+        public Contacto queryContacts(String myNumber) {
+            if (findContact(myNumber)!=-1) {
+                return myContacts.get(findContact(myNumber));
             } else {
                 return null;
             }
@@ -121,102 +121,90 @@ class Main{
         menu();
 
         try{
+            while (cont){
+                System.out.println("Elige una opción");
+                op=sc.nextInt();
 
-        while (cont){
-            System.out.println("Elige una opción");
-            op=sc.nextInt();
+                switch (op){
 
-            switch (op){
+                    case 0: //Salir
+                         cont=false;
+                         System.out.println("Adios");
+                    break;
 
-                case 0: //Salir
-                    cont=false;
-                    System.out.println("Adios");
+                    case 1: //Menu
+                        tel.printContact();
+                    break;
+
+                    case 2://Crear
+
+                        System.out.println("Introduce un nombre:");
+                        name=sc.next();
+                        System.out.println("Pon tu número de teléfono");
+                        phoneNumber=sc.next();
+                        Contacto con = new Contacto(name, phoneNumber);
+                        tel.addNewContact(con);
 
                     break;
 
-                case 1: //Menu
-                    tel.printContact();
+                    case 3://Actualizar
+                         String name2;
+                         String phone;
 
+                         System.out.println("Introduce el nombre que quieras actualizar");
+                         name=sc.next();
+
+                         System.out.println(tel.queryContacts(name).getName());
+                         System.out.println("Introduce el nuevo nombre");
+                         name2=sc.next();
+
+                         System.out.println("Introduce un nuevo número");
+                         phone=sc.next();
+                         Contacto Newcon = new Contacto(name2, phone);
+
+                         if(tel.updateContact(tel.queryContacts(name),Newcon)){
+                             System.out.println("El contacto se ha encontrado con éxito");
+                         }else{
+                             System.out.println("Error, este contacto no existe");
+                         }
                     break;
 
-                case 2://Crear
-                    System.out.println("Introduce un nombre:");
-                    name=sc.next();
-                    System.out.println("Pon tu número de teléfono");
-                    phoneNumber=sc.next();
-                    Contacto con = new Contacto(name, phoneNumber);
+                    case 4: //Eliminar
+                        System.out.println("Introduce el nombre que quieres borrar");
+                        name=sc.next();
+                        System.out.println(tel.queryContacts(name).getName());
 
-                    tel.addNewContact(con);
-
+                        if(tel.removeContact(tel.queryContacts(name))){
+                            System.out.println("Contacto eliminado");
+                        }else{
+                            System.out.println("El contacto no se encuentra en la lista");
+                        }
                     break;
 
-                case 3://Actualizar
-                    String name2;
-                    String phone;
-
-                    System.out.println("Introduce el nombre que quieras actualizar");
-                    name=sc.next();
-                    System.out.println(tel.queryContacts(name).getName());
-
-
-                    System.out.println("Introduce el nuevo nombre");
-                    name2=sc.next();
-                    System.out.println("Introduce un nuevo número");
-                    phone=sc.next();
-
-                    Contacto Newcon = new Contacto(name2, phone);
-
-                    if(tel.updateContact(tel.queryContacts(name),Newcon)){
-                        System.out.println("El contacto se ha encontrado con éxito");
-                    }else{
-                        System.out.println("Error, este contacto no existe");
-                    }
-                    break;
-
-                case 4: //Eliminar
-                    System.out.println("Introduce el nombre que quieres borrar");
-                    name=sc.next();
-                    System.out.println(tel.queryContacts(name).getName());
-
-                    if(tel.removeContact(tel.queryContacts(name))){
-                        System.out.println("Contacto eliminado");
-                    }else{
-                        System.out.println("El contacto no se encuentra en la lista");
-                    }
-
-                    break;
-
-                case 5://Buscar
-                    try {
-
-
-                        System.out.println("Introduce el nombre que quieres encontrar");
-                        name = sc.next();
+                    case 5://Buscar
+                        try {
+                            System.out.println("Introduce el nombre que quieres encontrar");
+                            name = sc.next();
                             System.out.println("El contacto es " + tel.queryContacts(name).getName()
                                     + " y su número es " + tel.queryContacts(name).getPhoneNumber());
 
-                        break;
-                    }catch (NullPointerException n){
-
-                        System.out.println("null");
-
-                    }
-
-                case 6:
-                    menu();
+                        }catch (NullPointerException n){
+                            System.out.println("null");
+                        }
 
                     break;
 
-                default:
-                    System.out.println("No se ha encontrado está opción");
-
+                    case 6:
+                        menu();
                     break;
 
-
+                    default:
+                        System.out.println("No se ha encontrado está opción");
+                    break;
+                }
             }
-        }
 
-    }catch (InputMismatchException e){
+        }catch (InputMismatchException e){
             System.out.println("No se permiten letras, solo números");}
     }
 }
