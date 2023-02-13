@@ -76,28 +76,36 @@ public class mAINjor {
                     break;
 
                     case 1://Hacia adelante
-                        System.out.println("La Siguiente canción");
-                        //play(listRep, select);
-                        iterator.next();
-                        if (iterator.hasNext()) {
-                            System.out.println("Poniendo la canción " + iterator.next());
+                        try{
+                            System.out.println("La Siguiente canción");
+                            //play(listRep, select);
+                            iterator.next();
+                            if (iterator.hasNext()) {
+                                System.out.println("Poniendo la canción " + iterator.next());
 
-                        } else {
+                            } else {
+                                System.out.println("Esta es la última de la lista de canciones");
+                            }
+                            if(iterator.hasPrevious()){
+                                iterator.previous();
+                            }
+                        }catch (NoSuchElementException e){
                             System.out.println("Esta es la última de la lista de canciones");
-                        }
-                        if(iterator.hasPrevious()){
-                            iterator.previous();
                         }
                     break;
 
                     case 2://Hacia atras
-                        System.out.println("La anterior canción");
+                        try{
+                            System.out.println("La anterior canción");
 
-                        if (iterator.hasPrevious()) {
-                            System.out.println("Poniendo la canción " + iterator.previous());
+                            if (iterator.hasPrevious()) {
+                                System.out.println("Poniendo la canción " + iterator.previous());
 
-                        } else {
-                            System.out.println("Esta es la primera de la lista de canciones");
+                            } else {
+                                System.out.println("Esta es la primera de la lista de canciones");
+                            }
+                        }catch (NoSuchElementException e){
+                            System.out.println("Esta es la última de la lista de canciones");
                         }
                     break;
 
